@@ -25,6 +25,7 @@ VALUES
 (1045,'Marco','SI',5);
 <hr>
 <h1>Ex2 SQLITE (https://sqlite.org/fiddle/index.html)</h1>
+
 PRAGMA foreign_keys = ON;
 
 create table aluno(
@@ -57,9 +58,12 @@ VALUES
 (1045,'Marco','SI',5);
 
 INSERT INTO Monitoria VALUES
-('SI','5','Gobbi');
+('SI2','1021','Gobbi');
 
 INSERT INTO Monitoria VALUES
 ('ADS','9','Hugo');
+
+INSERT INTO Monitoria VALUES
+('ADS3',1,'sans');
 
 SELECT * FROM MONITORIA;
