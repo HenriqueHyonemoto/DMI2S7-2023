@@ -58,7 +58,8 @@ VALUES
 
 INSERT INTO Monitoria VALUES
 ('SI','5','Gobbi');
+
 INSERT INTO Monitoria VALUES
-('SI','9','Hugo');
+('ADS','9','Hugo');
 
 SELECT * FROM MONITORIA;
