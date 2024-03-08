@@ -92,7 +92,9 @@ disciplina char(30),
 idAluno char(4),
 orientador char(50),
 PRIMARY KEY (disciplina),
-FOREIGN KEY (idAluno) REFERENCES Alunos (idAluno));
+FOREIGN KEY (idAluno) REFERENCES Alunos (idAluno)
+--ON DELETE CASCADE --Para o primeiro EX
+--ON UPDATE SET DEFAULT -- Para o ultimo EX);
 
 select * from Monitoria
 
@@ -104,3 +106,5 @@ insert into Monitoria values
 
 --------------------------------
 Delete from Alunos where idAluno = '0002';
+
+Update Alunos set idAluno = '0009' WHERE idAluno = '0001'; 
