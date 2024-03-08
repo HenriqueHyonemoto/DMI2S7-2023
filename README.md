@@ -104,7 +104,41 @@ insert into Monitoria values
 ('Gestao','0001','Murari'),
 ('Economia','0002','Evandro');
 
---------------------------------
 Delete from Alunos where idAluno = '0002';
 
 Update Alunos set idAluno = '0009' WHERE idAluno = '0001'; 
+
+-----------------------------------------------------
+Ex3
+
+PRAGMA FOREIGN_KEYS = ON;
+
+--drop table Func1
+
+create table Func1(
+id char(3),
+nome char(20),
+idade int,
+PRIMARY KEY (id)
+);
+
+insert into Func1 values
+('1','Clark',33),
+('3','Leona',25);
+
+--drop table Func2
+create table Func2(
+id char(3),
+nome char(20),
+idade int,
+PRIMARY KEY (id)
+);
+
+insert into Func2 values
+('2','Ralkf',32),
+('3','Leona',25);
+
+select * from Func1
+EXCEPT
+select * from Func2
+
