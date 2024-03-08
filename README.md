@@ -142,3 +142,22 @@ select * from Func1
 EXCEPT
 select * from Func2
 
+
+select * from Func1
+UNION
+select * from Func2
+
+
+select * from Func1
+INTERSECT
+select * from Func2
+
+
+
+
+
+
+
+
+
+
