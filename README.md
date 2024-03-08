@@ -67,3 +67,40 @@ INSERT INTO Monitoria VALUES
 ('ADS3',1,'sans');
 
 SELECT * FROM MONITORIA;
+
+-----------------------------------------
+Ex1 Aula 08/03/24
+PRAGMA FOREIGN_KEYS = ON;
+
+--DROP TABLE Alunos
+create table Alunos (
+idAluno char(4),
+nome char(50),
+curso char(50),
+semestre chat(50),
+PRIMARY KEY (idAluno));
+
+select * from Alunos;
+
+insert into Alunos values
+('0001','Rick','BSI','7SEM'),
+('0002','Dimas','BSI','7SEM');
+
+--DROP TABLE Monitoria
+create table Monitoria(
+disciplina char(30),
+idAluno char(4),
+orientador char(50),
+PRIMARY KEY (disciplina),
+FOREIGN KEY (idAluno) REFERENCES Alunos (idAluno));
+
+select * from Monitoria
+
+insert into Monitoria values 
+('Android','0001','Hugo'),
+('HTML','0002','Eder'),
+('Gestao','0001','Murari'),
+('Economia','0002','Evandro');
+
+--------------------------------
+Delete from Alunos where idAluno = '0002';
