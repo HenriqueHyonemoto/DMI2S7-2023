@@ -8,12 +8,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends Activity {
+
+
 
     private BancoDados bd;
     private List<Disciplina> disciplinas = new ArrayList<Disciplina>();
@@ -26,12 +30,59 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        abreAdd t1 = new abreAdd();
+        t1.setSaida(this);
+
+        Button bt1;
+        bt1 = (Button)findViewById(R.id.btnAdd);
+        bt1.setOnClickListener(t1);
+
+        //Botao para Abrir os meses
+        abreMeses t2 = new abreMeses();
+        t2.setSaida(this);
+
+        Button bt2;
+        bt2 = (Button)findViewById(R.id.btnMeses);
+        bt2.setOnClickListener(t2);
+
         bd = new BancoDados(this);
         lerDados();
     }
 
-    public void lerDados() {
+    class abreAdd implements View.OnClickListener {
 
+        private MainActivity saida;
+
+        @Override
+        public void onClick(View v) {
+            Intent i = new Intent(saida, Adiciona.class);
+            saida.startActivity(i);
+        }
+
+        public void setSaida(MainActivity p) {
+            saida = p;
+        }
+    }
+
+    //classe para abrir a interface de ver Meses
+    class abreMeses implements View.OnClickListener {
+
+
+
+        private MainActivity saida;
+
+        @Override
+        public void onClick(View v) {
+            Intent i = new Intent(saida, Meses.class);
+            saida.startActivity(i);
+        }
+
+        public void setSaida(MainActivity p2) {
+            saida = p2;
+        }
+    }
+
+    public void lerDados() {
         bd.abrir();
         disciplinas.clear();
 
@@ -39,45 +90,40 @@ public class MainActivity extends Activity {
         if (cursor.moveToFirst()) {
             do {
                 Disciplina d = new Disciplina();
-
                 d.id = cursor.getInt(cursor.getColumnIndex(BancoDados.KEY_ID));
                 d.nome = cursor.getString(cursor.getColumnIndex(BancoDados.KEY_NOME));
                 d.dia = cursor.getString(cursor.getColumnIndex(BancoDados.KEY_DIA));
-
                 disciplinas.add(d);
-            } while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
-
-        if (disciplinas.size() > 0) {
-
-            if (adaptadorDisciplina == null) {
-
-                adaptadorDisciplina = new DisciplinaAdapter(this, disciplinas) {
-                    @Override
-                    public void edita(Disciplina disciplina) {
-                        Intent intent = new Intent(getApplicationContext(), Adiciona.class);
-                        intent.putExtra("disciplina", disciplina);
-                        startActivityForResult(intent, REQUEST_EDICAO);
-                    }
-
-                    @Override
-                    public void deleta(Disciplina disciplina) {
-                        bd.abrir();
-                        bd.apagaEvento(disciplina.id);
-                        bd.fechar();
-                        lerDados();
-                    }
-                };
-
-                ListView Lista = (ListView)findViewById(R.id.listaDisciplinas);
-                Lista.setAdapter(adaptadorDisciplina);
-                Log.i("teste", "teste");
-            } else {
-                adaptadorDisciplina.novosDados(disciplinas);
-            }
-        }
+        cursor.close();  // Certifique-se de fechar o cursor
 
         bd.fechar();
+
+        if (adaptadorDisciplina == null) {
+            adaptadorDisciplina = new DisciplinaAdapter(this, disciplinas) {
+                @Override
+                public void edita(Disciplina disciplina) {
+                    Intent intent = new Intent(getApplicationContext(), Adiciona.class);
+                    intent.putExtra("disciplina", disciplina);
+                    startActivityForResult(intent, REQUEST_EDICAO);
+                }
+
+                @Override
+                public void deleta(Disciplina disciplina) {
+                    bd.abrir();
+                    bd.apagaEvento(disciplina.id);
+                    bd.fechar();
+                    lerDados();
+                }
+            };
+
+            ListView lista = (ListView)findViewById(R.id.listaDisciplinas);
+            lista.setAdapter(adaptadorDisciplina);
+        } else {
+            adaptadorDisciplina.novosDados(disciplinas);
+            adaptadorDisciplina.notifyDataSetChanged();  // Notifica o adaptador sobre os novos dados
+        }
     }
 
     @Override
@@ -107,4 +153,6 @@ public class MainActivity extends Activity {
             }
         }
     }
+
+
 }

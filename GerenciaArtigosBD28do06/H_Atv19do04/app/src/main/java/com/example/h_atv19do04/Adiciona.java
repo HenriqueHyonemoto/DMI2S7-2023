@@ -24,39 +24,49 @@ public class Adiciona extends Activity {
         edtDia = (EditText)findViewById(R.id.campoDia);
 
         Intent intent = getIntent();
-        disciplina = (Disciplina) intent.getSerializableExtra("disciplina");
+        disciplina = (Disciplina)intent.getSerializableExtra("disciplina");
 
         if (disciplina != null) {
-                edtNome.setText(disciplina.nome);
+            edtNome.setText(disciplina.nome);
             edtDia.setText(disciplina.dia);
         }
 
-        Button btnSalvar = findViewById(R.id.botao);
+        Button btnSalvar = (Button)findViewById(R.id.botao);
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View v) {
                 salvar();
+
             }
         });
     }
 
     public void salvar() {
+        Intent i = new Intent(this, MainActivity.class);
+        startActivityForResult(i, 1);
+
         BancoDados bd = new BancoDados(this);
         bd.abrir();
-
-        String nome = edtNome.getText().toString();
-        String dia = edtDia.getText().toString();
 
         if (disciplina != null) {
             bd.atualizaEvento(disciplina.id,
                     edtNome.getText().toString(),
                     edtDia.getText().toString());
         } else {
-            bd.insereEvento(nome, dia);
+            bd.insereEvento(
+                    edtNome.getText().toString(),
+                    edtDia.getText().toString());
         }
 
+
         bd.fechar();
-        setResult(RESULT_OK);
+        Intent intent = new Intent();
+        intent.putExtra("key", "value");
+        setResult(MainActivity.REQUEST_SALVOU);
         finish();
     }
+
+
+
 }

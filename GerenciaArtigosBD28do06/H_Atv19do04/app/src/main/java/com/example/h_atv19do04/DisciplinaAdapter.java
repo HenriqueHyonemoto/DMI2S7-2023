@@ -38,7 +38,7 @@ public abstract class DisciplinaAdapter extends BaseAdapter {
     @Override
     public View getView (final int position, View convertView,
                          ViewGroup parent) {
-        View v = inflater.inflate(R.layout.activity_disciplina, null);
+        View v = inflater.inflate(R.layout.item_disciplina, null);
 
         ((TextView)(v.findViewById(R.id.txtNome)))
                 .setText(disciplinas.get(position).nome);
