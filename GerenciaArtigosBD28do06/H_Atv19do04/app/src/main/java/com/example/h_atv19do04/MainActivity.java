@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
         @Override
         public void onClick(View v) {
             Intent i = new Intent(saida, Adiciona.class);
-            saida.startActivity(i);
+            saida.startActivityForResult(i,0);
         }
 
         public void setSaida(MainActivity p) {

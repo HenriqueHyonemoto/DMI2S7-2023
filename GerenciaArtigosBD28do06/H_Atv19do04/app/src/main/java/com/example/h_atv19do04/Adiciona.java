@@ -43,11 +43,12 @@ public class Adiciona extends Activity {
     }
 
     public void salvar() {
-        Intent i = new Intent(this, MainActivity.class);
-        startActivityForResult(i, 1);
+        // Intent i = new Intent(this, MainActivity.class);
+        //startActivityForResult(i, 1);
 
         BancoDados bd = new BancoDados(this);
         bd.abrir();
+        setResult(MainActivity.REQUEST_SALVOU);
 
         if (disciplina != null) {
             bd.atualizaEvento(disciplina.id,
@@ -59,11 +60,9 @@ public class Adiciona extends Activity {
                     edtDia.getText().toString());
         }
 
-
         bd.fechar();
-        Intent intent = new Intent();
-        intent.putExtra("key", "value");
-        setResult(MainActivity.REQUEST_SALVOU);
+        // Intent intent = new Intent();
+        //intent.putExtra("key", "value");
         finish();
     }
 
