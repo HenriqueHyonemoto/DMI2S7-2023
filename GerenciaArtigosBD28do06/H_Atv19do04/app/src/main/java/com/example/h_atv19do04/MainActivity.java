@@ -67,8 +67,6 @@ public class MainActivity extends Activity {
     //classe para abrir a interface de ver Meses
     class abreMeses implements View.OnClickListener {
 
-
-
         private MainActivity saida;
 
         @Override
